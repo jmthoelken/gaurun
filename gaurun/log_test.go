@@ -2,14 +2,19 @@ package gaurun
 
 import (
 	"fmt"
+	"io/ioutil"
 	"testing"
 
-	"github.com/uber-go/zap"
+	"github.com/Sirupsen/logrus"
 )
 
 func init() {
-	LogAccess = zap.New(zap.NewJSONEncoder(zap.RFC3339Formatter("time")), zap.DiscardOutput)
-	LogError = zap.New(zap.NewJSONEncoder(zap.RFC3339Formatter("time")), zap.DiscardOutput)
+	LogAccess = logrus.New()
+	LogError = logrus.New()
+	LogAccess.Formatter = new(GaurunFormatter)
+	LogError.Formatter = new(GaurunFormatter)
+	LogAccess.Out = ioutil.Discard
+	LogError.Out = ioutil.Discard
 }
 
 func BenchmarkLogPushIOSOmitempty(b *testing.B) {
