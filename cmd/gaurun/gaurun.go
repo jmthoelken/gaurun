@@ -96,7 +96,8 @@ func main() {
 	}
 
 	if err := gaurun.InitHttpClient(); err != nil {
-		gaurun.LogError.Fatal("failed to init http client")
+		//gaurun.LogError.Fatal("failed to init http client")
+		gaurun.LogError.Fatal(err)
 	}
 	gaurun.InitStat()
 	gaurun.StartPushWorkers(gaurun.ConfGaurun.Core.WorkerNum, gaurun.ConfGaurun.Core.QueueNum)

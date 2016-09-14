@@ -76,9 +76,17 @@ func NewApnsPayloadHttp2(req *RequestGaurunNotification) map[string]interface{} 
 
 	pm := p.Map()
 
+	var f interface{}
+
 	if len(req.Extend) > 0 {
 		for _, extend := range req.Extend {
-			pm[extend.Key] = extend.Value
+
+			if extend.Key == "data" {
+				json.Unmarshal([]byte(extend.Value), &f)	
+			}
+			
+
+			pm[extend.Key] = f
 		}
 	}
 
